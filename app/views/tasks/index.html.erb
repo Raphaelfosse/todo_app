@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<h3>Tâches à réaliser</h3>
+ <% @tasks.incomplete.each do |task| %>
+ <p><%= task.description %>|<%= " Créé le #{task.created_at.day}/#{task.created_at.month}" %>
+ <%= link_to "Done", complete_task_path(task), method: :put %><%= link_to ' Modifier', edit_task_path(task) %><%= link_to ' X', task, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+<% end %>
+
+<h3>Tâches réalisées</h3>
+ <% @tasks.completed.each do |task| %>
+ <p><%= task.description %>|
+ <%= link_to "Undo", incomplete_task_path(task), method: :delete %></p>
+<% end %>
+
+<br>
+<%= link_to 'Ajouter une nouvelle tâche', new_task_path %>
+
+
