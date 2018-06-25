@@ -14,17 +14,23 @@
  *= require_self
  */
 
+ html {
+     position: relative;
+     min-height: 100%;
+ }
+
 body { 
-    display: block;
-    margin: 10px;
+  display: block;
+  font-family: "Arial", "sans-serif"; 
 }
 
 body:focus { 
-    outline: none;
+  outline: none;
 }
 
 h1 {
   color:darkblue;
+  font-size: 25px; 
 }
 
 h2 {
@@ -33,4 +39,49 @@ h2 {
 
 td {
   padding:5px;
+}
+
+div.hidden {
+  display:none;
+}
+
+div.left_side {
+  float: left;
+  margin: 0 42px;
+  padding: 15px; 
+  border: 1px solid #BFBFBF;
+  background-color: white;
+  box-shadow: 10px 10px 5px #aaaaaa;
+  border-radius: 10px;
+  min-height: 400px;
+}
+
+div.right_side {
+  float:right;
+  margin: 0 1.5%;
+  width: 30%;
+  max-height: 400px;
+  overflow: scroll;
+}
+
+ul {
+  list-style-type: none;
+  margin-right: 20px;
+}
+
+.done_btn {
+  color: blue; 
+  &:hover {
+    color: red; 
+    text-decoration: none;
+  }
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: #000000;
+    color: #FFFFFF;
 }

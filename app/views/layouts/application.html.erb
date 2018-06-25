@@ -8,11 +8,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Todo App Manager</a>
-  </nav>
+
+<%= render 'layouts/header' %>
 
 <%= yield %>
+
+<%= render 'layouts/footer' %>
 
 </body>
 </html>

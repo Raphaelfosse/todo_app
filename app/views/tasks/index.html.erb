@@ -1,20 +1,61 @@
 <p id="notice"><%= notice %></p>
 
 
+<div>
+  <div class="left_side">
+    <h1>Tâches à réaliser</h1>
+    <% if @tasks.incomplete.empty? %>
+      <p>Qu'avez-vous à faire aujourd'hui ?</p>
+    <% else %>
+      <% @tasks.incomplete.each do |task| %>
+        <p><%= link_to "Fait", complete_task_path(task), method: :put, :remote => true, class: "done_btn" %>
+        <%= "| #{task.description} |  Créé le #{task.created_at.day}/#{task.created_at.month}" %>
+        <%= link_to ' Modifier', edit_task_path(task), class: "hidden_choice" %>
+        <%= link_to ' X', task, method: :delete, data: { confirm: 'Êtes-vous sur ?' }, class: "hidden_choice" %></p>
+      <% end %>
+    <% end %>
+  </div>
 
-<h3>Tâches à réaliser</h3>
- <% @tasks.incomplete.each do |task| %>
- <p><%= task.description %>|<%= " Créé le #{task.created_at.day}/#{task.created_at.month}" %>
- <%= link_to "Done", complete_task_path(task), method: :put %><%= link_to ' Modifier', edit_task_path(task) %><%= link_to ' X', task, method: :delete, data: { confirm: 'Are you sure?' } %></p>
-<% end %>
+  <div class="right_side">
+    <h1>Tâches réalisées</h1><a href="#" id= "show_task"><p>Voir plus</p></a>
+    <div id="hidden_task" class="hidden">
+      <% @tasks.completed.each do |task| %>
+      <p><%= link_to "A faire", incomplete_task_path(task), method: :delete, class: "done_btn" %><%= "| #{task.description} effectué le #{task.updated_at.day}/#{task.updated_at.month}" %>
+      </p>
+      <% end %>
+    </div>
+  </div>
 
-<h3>Tâches réalisées</h3>
- <% @tasks.completed.each do |task| %>
- <p><%= task.description %>|
- <%= link_to "Undo", incomplete_task_path(task), method: :delete %></p>
-<% end %>
+  <div>
+    <%= form_for @task, :remote => true  do |f| %>
+      <% if @task.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
-<br>
-<%= link_to 'Ajouter une nouvelle tâche', new_task_path %>
+          <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
 
+      <div class="field">
+        <%= f.text_field :description, placeholder: 'Nouvelle tâche' %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Ajouter", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
 
+</div>
+
+<script> 
+  $(function() {
+    $('a#show_task').click(function(event){
+      event.preventDefault();
+      $('div#hidden_task').toggle();
+    });
+  });  
+</script>
